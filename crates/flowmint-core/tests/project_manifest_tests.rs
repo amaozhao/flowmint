@@ -205,6 +205,12 @@ fn recent_projects_persist_and_deduplicate() {
     add_recent_project(&home, &first).expect("existing project should move to front");
 
     let projects = list_recent_projects(&home).expect("recent projects should load");
+    let first = first
+        .canonicalize()
+        .expect("first project path should canonicalize");
+    let second = second
+        .canonicalize()
+        .expect("second project path should canonicalize");
     assert_eq!(projects, vec![first.clone(), second.clone()]);
 
     let reloaded = list_recent_projects(&home).expect("recent projects should reload");
