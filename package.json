@@ -1,0 +1,19 @@
+{
+  "name": "flowmint",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/desktop"
+  ],
+  "scripts": {
+    "check": "cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace && npm run frontend:model-test && npm run frontend:typecheck && npm run frontend:build",
+    "desktop:dev": "npm --workspace apps/desktop run tauri dev",
+    "desktop:build": "npm --workspace apps/desktop run tauri build",
+    "desktop:build:linux": "npm --workspace apps/desktop run tauri -- build --bundles deb,rpm",
+    "desktop:build:mac": "npm --workspace apps/desktop run tauri -- build --bundles app,dmg",
+    "desktop:build:windows": "npm --workspace apps/desktop run tauri -- build --bundles msi",
+    "frontend:build": "npm --workspace apps/desktop run build",
+    "frontend:model-test": "npm --workspace apps/desktop run test:model",
+    "frontend:typecheck": "npm --workspace apps/desktop run typecheck"
+  }
+}
