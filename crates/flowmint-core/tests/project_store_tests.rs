@@ -98,7 +98,10 @@ fn add_project_initializes_manifest_and_lists_recent_project() {
 
     let projects = list_projects(&home).expect("projects should list");
     assert_eq!(projects.len(), 1);
-    assert_eq!(projects[0].path, project_dir);
+    let expected_path = project_dir
+        .canonicalize()
+        .expect("project path should canonicalize");
+    assert_eq!(projects[0].path, expected_path);
     assert!(projects[0].initialized);
 
     fs::remove_dir_all(home).expect("home should remove");
