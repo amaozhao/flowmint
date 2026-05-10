@@ -8,6 +8,9 @@ fn assert_library_structure(home: &Path) {
     assert!(home.join("recent-projects.toml").is_file());
     assert!(home.join("prompts").is_dir());
     assert!(home.join("skills").is_dir());
+    assert!(home.join("playbooks").is_dir());
+    assert!(home.join("rules").is_dir());
+    assert!(home.join("import-sources").is_dir());
     assert!(home.join("templates").is_dir());
     assert!(home.join("cache").is_dir());
     assert!(home.join("backups").is_dir());
@@ -61,6 +64,32 @@ fn init_library_is_idempotent() {
     assert_library_structure(&second.path);
 
     fs::remove_dir_all(second.path).expect("test library should be removable");
+}
+
+#[test]
+fn app_state_keeps_legacy_library_initialized_without_import_sources() {
+    let home = test_home("legacy-without-import-sources");
+    fs::create_dir_all(&home).expect("legacy home should create");
+    fs::write(home.join("config.toml"), "").expect("config should create");
+    fs::write(home.join("recent-projects.toml"), "").expect("recent projects should create");
+    for dir in [
+        "prompts",
+        "skills",
+        "playbooks",
+        "rules",
+        "templates",
+        "cache",
+        "backups",
+    ] {
+        fs::create_dir_all(home.join(dir)).expect("legacy dir should create");
+    }
+
+    let state = get_app_state_for_home(&home).expect("legacy state should load");
+
+    assert!(state.library.initialized);
+    assert!(!home.join("import-sources").exists());
+
+    fs::remove_dir_all(home).expect("test library should be removable");
 }
 
 #[test]

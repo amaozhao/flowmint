@@ -11,6 +11,17 @@ const LIBRARY_DIRS: &[&str] = &[
     "skills",
     "playbooks",
     "rules",
+    "import-sources",
+    "templates",
+    "cache",
+    "backups",
+];
+
+const REQUIRED_LIBRARY_DIRS: &[&str] = &[
+    "prompts",
+    "skills",
+    "playbooks",
+    "rules",
     "templates",
     "cache",
     "backups",
@@ -148,5 +159,7 @@ pub fn init_library_at(home: &Path) -> Result<LibraryInfo> {
 fn is_initialized(home: &Path) -> bool {
     home.join("config.toml").is_file()
         && home.join("recent-projects.toml").is_file()
-        && LIBRARY_DIRS.iter().all(|dir| home.join(dir).is_dir())
+        && REQUIRED_LIBRARY_DIRS
+            .iter()
+            .all(|dir| home.join(dir).is_dir())
 }

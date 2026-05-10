@@ -62,7 +62,13 @@ Run this checklist before tagging an MVP build.
 32. Browse or paste a project path for Project scope; choose Global User scope without a project path and confirm scan is still allowed.
 33. Choose target and scope, scan candidates, and verify the scan is read-only for Claude Code `CLAUDE.md` / `.claude/*` and Codex `AGENTS.md` / `.codex/skills` / `.codex/rules`.
 34. Choose Copy for one candidate and Adopt for one candidate, preview the import plan, then apply only if there are no conflicts.
-35. Open Settings, run Rebuild Index, and export the debug report.
+35. Switch Import source to Public GitHub URL.
+36. Paste a small public GitHub repository, tree, or blob URL that contains at least one supported Prompt, Skill, Playbook, or Rule path.
+37. Scan the URL and confirm skipped remote files appear as warnings, not fatal errors.
+38. Choose Import for at least one candidate, edit the destination ID, preview, and confirm existing-library collisions or duplicate selected destination IDs block apply.
+39. Apply the GitHub import and verify the asset exists in the local library.
+40. If Attach after import is enabled, verify the asset appears in the selected project profile or global profile before running Sync.
+41. Open Settings, run Rebuild Index, and export the debug report.
 
 ## Pass Criteria
 
@@ -74,6 +80,8 @@ Run this checklist before tagging an MVP build.
 - Skill `metadata.toml`, `examples/`, and `resources/` are preserved and exported recursively.
 - Global target profiles can be managed from Settings.
 - Import scan is read-only and adoption writes lock records only after apply.
+- Public GitHub URL import writes selected remote assets into the local library and records provenance under `import-sources/`.
+- GitHub-imported assets can be attached to project or global profiles before sync writes target agent files.
 - Repeated sync is idempotent.
 - Manual edits to generated files are not overwritten silently.
 - No Force Overwrite or Mark as unmanaged action is exposed in the MVP UI.

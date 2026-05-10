@@ -8,6 +8,7 @@ use crate::error::{FlowmintError, Result};
 use crate::sync::plan::SyncScope;
 
 pub mod adopt;
+pub mod remote;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]

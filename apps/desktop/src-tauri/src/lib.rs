@@ -6,6 +6,10 @@ use commands::assets::{
     create_asset, delete_asset, get_asset, list_assets, open_asset_folder,
     promote_skill_to_playbook, update_asset, validate_asset,
 };
+use commands::github_import::{
+    PublicGithubImportState, apply_public_github_import, preview_public_github_import,
+    scan_public_github_import,
+};
 use commands::import::{
     ImportState, apply_import_adoption, preview_import_adoption, scan_import_candidates,
 };
@@ -61,6 +65,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .manage(SyncState::default())
         .manage(ImportState::default())
+        .manage(PublicGithubImportState::default())
         .invoke_handler(tauri::generate_handler![
             get_app_state,
             init_library,
@@ -86,6 +91,9 @@ pub fn run() {
             scan_import_candidates,
             preview_import_adoption,
             apply_import_adoption,
+            scan_public_github_import,
+            preview_public_github_import,
+            apply_public_github_import,
             preview_sync,
             acknowledge_global_sync_plan,
             apply_sync,

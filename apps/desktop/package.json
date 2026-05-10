@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1 --port 1420",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 1420",
-    "test:model": "tsc --target ES2022 --module CommonJS --moduleResolution node --strict --skipLibCheck --outDir ../../target/frontend-model-tests --noEmit false tests/assetEditorModel.test.ts tests/i18n.test.ts tests/targetCapabilities.test.ts && node ../../target/frontend-model-tests/tests/assetEditorModel.test.js && node ../../target/frontend-model-tests/tests/i18n.test.js && node ../../target/frontend-model-tests/tests/targetCapabilities.test.js",
+    "test:model": "tsc --target ES2022 --module CommonJS --moduleResolution node --strict --skipLibCheck --outDir ../../target/frontend-model-tests --noEmit false tests/assetEditorModel.test.ts tests/importPageModel.test.ts tests/i18n.test.ts tests/targetCapabilities.test.ts && node ../../target/frontend-model-tests/tests/assetEditorModel.test.js && node ../../target/frontend-model-tests/tests/importPageModel.test.js && node ../../target/frontend-model-tests/tests/i18n.test.js && node ../../target/frontend-model-tests/tests/targetCapabilities.test.js",
     "typecheck": "tsc -b --pretty false",
     "tauri": "tauri"
   },

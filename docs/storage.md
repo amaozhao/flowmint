@@ -16,10 +16,27 @@ Default library:
   skills/
   playbooks/
   rules/
+  import-sources/
   templates/
   cache/
   backups/
 ```
+
+`import-sources/` stores provenance records for assets imported from remote
+sources such as public GitHub URLs:
+
+```text
+~/.flowmint/import-sources/
+  prompts/<prompt-id>.json
+  skills/<skill-id>.json
+  playbooks/<playbook-id>.json
+  instruction-rules/<rule-id>.json
+  command-rules/<rule-id>.json
+```
+
+These records belong to the local library asset, not to an individual project.
+Projects still reference imported assets through `.flowmint.toml`; global
+profiles reference them through `global-sync-profiles.toml`.
 
 ## Project Files
 
@@ -42,5 +59,8 @@ scope. Lockfile merge behavior preserves records for other targets/scopes.
 
 - UI pages do not write workflow files directly.
 - Sync and import adoption apply only backend-cached plans.
+- Public GitHub import writes only selected assets and library provenance during
+  apply; optional project/global attachment is represented by Flowmint manifests
+  or global profiles before sync writes target agent files.
 - Global sync apply requires exact path acknowledgement.
 - Generated file conflicts are detected by target path and content hash.

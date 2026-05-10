@@ -24,6 +24,11 @@ that are intentionally deferred.
   acknowledgement of mutating paths; the UI shows the global root and concrete
   paths before apply.
 - Import supports read-only scan plus Copy / Adopt / Skip preview/apply.
+- Import supports public GitHub repository, tree, and blob URLs for Prompt,
+  Skill, Playbook, Instruction Rule, and Codex Command Rule candidates.
+- GitHub imports write selected assets into the local library, store source
+  provenance under `import-sources/`, and can attach imported assets to project
+  or global target profiles.
 - Skill examples/resources can be edited as supporting text files and are
   exported recursively.
 - English and Chinese UI switching works locally.
@@ -50,7 +55,7 @@ that are intentionally deferred.
 
 1. `flowmint-cli` as a first-class user entry.
 2. Search index with Tantivy or SQLite.
-3. Git-based sync or registry.
+3. Git-based bidirectional sync, private repository import, or registry.
 4. Cloud sync, accounts, team permissions, marketplace.
 5. AI chat, LLM API calls, agent runtime, and eval system.
 6. VS Code extension.

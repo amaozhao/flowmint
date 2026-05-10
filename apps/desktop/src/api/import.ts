@@ -62,6 +62,78 @@ export type ImportApplyResult = {
   adoptedAssets: number;
 };
 
+export type RemoteImportProvider = "public-github";
+
+export type RemoteImportSource = {
+  provider: RemoteImportProvider;
+  owner: string;
+  repo: string;
+  refName: string;
+  commitSha: string;
+  rootPath: string;
+  canonicalUrl: string;
+};
+
+export type RemoteImportCollision = {
+  assetRef: string;
+  libraryPath: string;
+};
+
+export type RemoteImportCandidate = {
+  candidateId: string;
+  id: string;
+  assetType: AssetType;
+  confidence: ImportConfidence;
+  source: RemoteImportSource;
+  sourcePaths: string[];
+  defaultDestinationId: string;
+  collision: RemoteImportCollision | null;
+  warnings: string[];
+  importable: boolean;
+};
+
+export type RemoteImportSelection = {
+  candidateId: string;
+  destinationId: string;
+  assetType: AssetType;
+};
+
+export type RemoteImportConflict = {
+  candidateId: string;
+  destinationId: string;
+  assetType: AssetType;
+  message: string;
+};
+
+export type RemoteImportPlanItem = {
+  candidateId: string;
+  destinationId: string;
+  assetType: AssetType;
+  sourcePaths: string[];
+};
+
+export type RemoteImportPlan = {
+  planId: string;
+  source: RemoteImportSource;
+  items: RemoteImportPlanItem[];
+  conflicts: RemoteImportConflict[];
+  warnings: string[];
+};
+
+export type RemoteImportApplyResult = {
+  planId: string;
+  importedAssets: number;
+  assetRefs: string[];
+  provenancePaths: string[];
+};
+
+export type PublicGithubImportScanResult = {
+  sessionId: string;
+  source: RemoteImportSource;
+  candidates: RemoteImportCandidate[];
+  warnings: string[];
+};
+
 export function scanImportCandidates(
   projectPath: string,
   target: string,
@@ -86,4 +158,19 @@ export function previewImportAdoption(
 
 export function applyImportAdoption(projectPath: string, planId: string): Promise<ImportApplyResult> {
   return callCommand<ImportApplyResult>("apply_import_adoption", { projectPath, planId });
+}
+
+export function scanPublicGithubImport(url: string): Promise<PublicGithubImportScanResult> {
+  return callCommand<PublicGithubImportScanResult>("scan_public_github_import", { url });
+}
+
+export function previewPublicGithubImport(
+  sessionId: string,
+  selections: RemoteImportSelection[],
+): Promise<RemoteImportPlan> {
+  return callCommand<RemoteImportPlan>("preview_public_github_import", { sessionId, selections });
+}
+
+export function applyPublicGithubImport(planId: string): Promise<RemoteImportApplyResult> {
+  return callCommand<RemoteImportApplyResult>("apply_public_github_import", { planId });
 }
